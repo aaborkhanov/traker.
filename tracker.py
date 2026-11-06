@@ -1,6 +1,13 @@
 import json
 
-tasks = {}
+try:
+    with open('tasks.json','r',encoding='utf-8') as f:
+        json.load(f)
+except FileNotFoundError:
+    tasks = {}
+except json.JSONDecodeError:
+    tasks = {}
+    print("Файл поврежден. Программа запущена без старых задач.")
 
 while True:
     task_name = input("Введите свою задачу(q для выхода) : ")

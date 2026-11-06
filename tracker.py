@@ -1,14 +1,17 @@
 import json
 
+#----------------- БЛОК ЧТЕНИЯ ФАЙЛА ----------------
 try:
     with open('tasks.json','r',encoding='utf-8') as f:
-        json.load(f)
+        tasks = json.load(f)
 except FileNotFoundError:
     tasks = {}
 except json.JSONDecodeError:
     tasks = {}
     print("Файл поврежден. Программа запущена без старых задач.")
 
+
+#--------- БЛОК ЗАПИСИ ЗАДАЧ И ИХ СТАТУСА ------------
 while True:
     task_name = input("Введите свою задачу(q для выхода) : ")
     if (task_name == "q"):
@@ -20,5 +23,11 @@ while True:
 with open("tasks.json","w",encoding = 'utf-8') as f:
     json.dump(tasks,f,ensure_ascii = False)
 
-for name, status in tasks.items():
-    print(name, "-" , status)
+
+#---------------- БЛОК ВЫВОДА ЗАДАЧ ----------------------
+answer = input("Желаете посмотреть какие задачи у вас есть? (Y/N): ")
+
+if answer.lower() == 'y':
+    print("\nВаши задачи:")
+    for name, status in tasks.items():
+        print(name, "-", status)
